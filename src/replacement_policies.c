@@ -28,9 +28,11 @@ void lru_cache_access(struct replacement_policy *replacement_policy,
 {
     //update the LRU replacement policy state given a new memory access
     for(int i = 0; i < cache_system->associativity; i++){
-	    if(cache_system->cache_lines[set_idx*cache_system->associativity+i].tag == tag)
+	    if(cache_system->cache_lines[set_idx*cache_system->associativity+i].tag == tag){
 		    ((struct lru_data*) replacement_policy->data)->use_time[set_idx*cache_system->associativity+i] = ((struct lru_data*) 
 			    replacement_policy->data)->count;
+		    printf("test\n");
+	    }
     }
     ((struct lru_data*) replacement_policy->data)->count++;
 }
