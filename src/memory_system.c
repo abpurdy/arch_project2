@@ -169,11 +169,11 @@ bool cache_system_line_in_accessed_set(struct cache_system *cache_system, uint32
 struct cache_line *cache_system_find_cache_line(struct cache_system *cache_system, uint32_t set_idx,
                                                 uint32_t tag)
 {
-    // TODO Return a pointer to the cache line within the given set that has
+    // Return a pointer to the cache line within the given set that has
     // the given tag. If no such element exists, then return NULL.
     uint32_t associativity = cache_system->associativity;
     for(int i = 0; i < associativity; i++){
-	    struct cache_line *found_line = &cache_system->cache_lines[((int) associativity*set_idx)];
+	    struct cache_line *found_line = &cache_system->cache_lines[((int) associativity*set_idx)+i];
 	    if(found_line->tag == tag)
 		    return found_line;
     }
