@@ -114,7 +114,7 @@ struct custom_data{
 uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_system *cache_system,
                                   uint32_t address, bool is_miss)
 {
-    // TODO perform the necessary prefetches for your custom strategy.
+    // perform the necessary prefetches for your custom strategy.
     if(((struct custom_data*) prefetcher->data)->n > 0){
 	    for(int i = 1; i <= ((struct custom_data*) prefetcher->data)->n; i++){
 		uint32_t fetch_address = address + i*cache_system->line_size;
@@ -129,7 +129,7 @@ uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_sy
     uint32_t already_missed = -1;
     struct address_list* trav_list = ((struct custom_data*) prefetcher->data)->visited;
 
-    while(fetch_count < 1 && trav_list->address != -1){
+    while(fetch_count < 2 && trav_list->address != -1){
 	    if(address == trav_list->address){
 		    if(last_missed != -1 && last_missed == already_missed){
 			    //printf("test\n");
@@ -150,13 +150,13 @@ uint32_t custom_handle_mem_access(struct prefetcher *prefetcher, struct cache_sy
     new_address->list = ((struct custom_data*) prefetcher->data)->visited;
     ((struct custom_data*) prefetcher->data)->visited = new_address;
 
-    // TODO: Return the number of lines that were prefetched.
+    // Return the number of lines that were prefetched.
     return ((struct custom_data*) prefetcher->data)->n + fetch_count;
 }
 
 void custom_cleanup(struct prefetcher *prefetcher)
 {
-    // TODO cleanup any additional memory that you allocated in the
+    // cleanup any additional memory that you allocated in the
     // custom_prefetcher_new function.
     while(((struct custom_data*) prefetcher->data)->visited->address != -1){
 	    struct address_list *value = ((struct custom_data*) prefetcher->data)->visited;
